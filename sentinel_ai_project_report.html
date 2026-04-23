@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sentinel AI – Project Report</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --accent: #06b6d4;
+    --danger: #ef4444;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --dark: #0f172a;
+    --surface: #1e293b;
+    --surface2: #273548;
+    --border: #334155;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #ffffff;
+    color: #1e293b;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  /* ── COVER PAGE ─────────────────────────────────────────────── */
+  .cover {
+    height: 100vh;
+    min-height: 800px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 40px;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%);
+    top: -100px; right: -100px;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(6,182,212,0.12) 0%, transparent 70%);
+    bottom: -100px; left: -100px;
+  }
+  .cover-badge {
+    background: rgba(99,102,241,0.2);
+    border: 1px solid rgba(99,102,241,0.4);
+    color: #a5b4fc;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    border-radius: 100px;
+    margin-bottom: 30px;
+    position: relative; z-index: 1;
+  }
+  .cover-shield {
+    font-size: 80px;
+    margin-bottom: 24px;
+    position: relative; z-index: 1;
+  }
+  .cover h1 {
+    font-size: 52px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -2px;
+    position: relative; z-index: 1;
+    margin-bottom: 8px;
+  }
+  .cover h1 span { color: #818cf8; }
+  .cover-tagline {
+    font-size: 16px;
+    color: #94a3b8;
+    font-weight: 400;
+    position: relative; z-index: 1;
+    margin-bottom: 48px;
+    max-width: 500px;
+  }
+  .cover-divider {
+    width: 80px; height: 3px;
+    background: linear-gradient(90deg, #6366f1, #06b6d4);
+    border-radius: 2px;
+    margin: 0 auto 48px;
+    position: relative; z-index: 1;
+  }
+  .cover-meta {
+    display: flex; gap: 40px;
+    position: relative; z-index: 1;
+  }
+  .meta-item { text-align: center; }
+  .meta-label {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: #64748b; font-weight: 600; display: block; margin-bottom: 6px;
+  }
+  .meta-value {
+    font-size: 14px; font-weight: 700; color: #e2e8f0;
+  }
+  .cover-footer {
+    position: absolute; bottom: 40px; left: 0; right: 0;
+    text-align: center; color: #475569; font-size: 11px;
+    z-index: 1;
+  }
+
+  /* ── PAGE LAYOUT ────────────────────────────────────────────── */
+  .page {
+    padding: 52px 60px;
+    max-width: 900px;
+    margin: 0 auto;
+    page-break-after: always;
+  }
+  .page:last-child { page-break-after: avoid; }
+
+  /* ── SECTION HEADER ─────────────────────────────────────────── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  .section-icon {
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .section-num {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: #6366f1; display: block;
+    margin-bottom: 2px;
+  }
+  .section-header h2 {
+    font-size: 22px; font-weight: 700; color: #0f172a; letter-spacing: -0.5px;
+  }
+
+  /* ── CONTENT ELEMENTS ───────────────────────────────────────── */
+  h3 { font-size: 15px; font-weight: 700; color: #0f172a; margin: 24px 0 10px; }
+  h4 { font-size: 13px; font-weight: 600; color: #334155; margin: 16px 0 8px; }
+  p { color: #475569; margin-bottom: 10px; }
+
+  /* ── CARDS ──────────────────────────────────────────────────── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .card-grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .card-icon { font-size: 24px; margin-bottom: 10px; display: block; }
+  .card h4 { margin: 0 0 6px; font-size: 13px; color: #0f172a; }
+  .card p { font-size: 12px; color: #64748b; margin: 0; }
+
+  /* ── TECH STACK PILLS ───────────────────────────────────────── */
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .pill {
+    font-size: 11px; font-weight: 600; padding: 4px 12px;
+    border-radius: 100px; display: inline-block;
+  }
+  .pill-purple { background: #ede9fe; color: #6d28d9; }
+  .pill-blue { background: #dbeafe; color: #1d4ed8; }
+  .pill-green { background: #d1fae5; color: #065f46; }
+  .pill-orange { background: #ffedd5; color: #9a3412; }
+  .pill-red { background: #fee2e2; color: #991b1b; }
+  .pill-cyan { background: #cffafe; color: #0e7490; }
+  .pill-dark { background: #0f172a; color: #e2e8f0; }
+
+  /* ── FLOW DIAGRAM ───────────────────────────────────────────── */
+  .flow {
+    display: flex; align-items: center; gap: 0;
+    background: #f8fafc; border: 1px solid #e2e8f0;
+    border-radius: 12px; padding: 20px; margin: 20px 0;
+    overflow: hidden;
+  }
+  .flow-step {
+    flex: 1; text-align: center; padding: 12px 8px;
+  }
+  .flow-step-icon { font-size: 22px; display: block; margin-bottom: 6px; }
+  .flow-step-label { font-size: 10px; font-weight: 600; color: #0f172a; display: block; }
+  .flow-step-sub { font-size: 9px; color: #64748b; display: block; margin-top: 2px; }
+  .flow-arrow { color: #94a3b8; font-size: 18px; flex-shrink: 0; }
+
+  /* ── TABLE ──────────────────────────────────────────────────── */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 12px; }
+  th {
+    background: #f1f5f9; color: #334155; font-weight: 700;
+    padding: 10px 14px; text-align: left; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  td { padding: 10px 14px; border-top: 1px solid #e2e8f0; color: #475569; }
+  tr:nth-child(even) td { background: #f8fafc; }
+
+  /* ── LIST ───────────────────────────────────────────────────── */
+  ul, ol { padding-left: 20px; margin: 8px 0 14px; }
+  li { color: #475569; margin-bottom: 5px; font-size: 12px; }
+  li strong { color: #0f172a; }
+
+  /* ── HIGHLIGHT BOX ──────────────────────────────────────────── */
+  .highlight {
+    background: linear-gradient(135deg, #ede9fe, #dbeafe);
+    border-left: 3px solid #6366f1;
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin: 16px 0;
+  }
+  .highlight p { color: #312e81; font-size: 12px; margin: 0; }
+
+  .highlight-success {
+    background: linear-gradient(135deg, #d1fae5, #cffafe);
+    border-left-color: #10b981;
+  }
+  .highlight-success p { color: #064e3b; }
+
+  .highlight-warning {
+    background: #fffbeb;
+    border-left-color: #f59e0b;
+  }
+  .highlight-warning p { color: #78350f; }
+
+  /* ── ARCHITECTURE BLOCK ─────────────────────────────────────── */
+  .arch-block {
+    border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; margin: 20px 0;
+  }
+  .arch-header {
+    background: #0f172a; color: #e2e8f0; padding: 10px 18px;
+    font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .arch-body { padding: 18px; }
+
+  /* ── METRIC ROW ─────────────────────────────────────────────── */
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 20px 0; }
+  .metric {
+    text-align: center; padding: 16px; background: #f8fafc;
+    border: 1px solid #e2e8f0; border-radius: 10px;
+  }
+  .metric-val { font-size: 24px; font-weight: 800; color: #6366f1; display: block; }
+  .metric-lbl { font-size: 10px; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* ── CODE BLOCK ─────────────────────────────────────────────── */
+  .code {
+    background: #0f172a; border-radius: 8px; padding: 14px 18px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: #e2e8f0; margin: 12px 0; line-height: 1.8;
+  }
+  .code .kw { color: #818cf8; }
+  .code .str { color: #34d399; }
+  .code .cm { color: #475569; }
+  .code .val { color: #f59e0b; }
+
+  /* ── ROLE CARD ──────────────────────────────────────────────── */
+  .role-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 16px 0; }
+  .role-card { border-radius: 10px; padding: 16px; }
+  .role-admin { background: #fef3c7; border: 1px solid #fbbf24; }
+  .role-police { background: #dbeafe; border: 1px solid #60a5fa; }
+  .role-cctv { background: #d1fae5; border: 1px solid #34d399; }
+  .role-card h4 { font-size: 13px; margin: 0 0 8px; }
+  .role-card ul { margin: 0; padding-left: 16px; }
+  .role-card li { font-size: 11px; margin-bottom: 3px; }
+
+  /* ── PRINT ──────────────────────────────────────────────────── */
+  @media print {
+    .cover { page-break-after: always; }
+    .page { page-break-after: always; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  COVER PAGE                                                    -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-badge">Technical Project Report</div>
+  <div class="cover-shield">🛡️</div>
+  <h1>Sentinel <span>AI</span></h1>
+  <p class="cover-tagline">Intelligent Behavioral Risk Analysis &amp; Surveillance Intelligence Platform</p>
+  <div class="cover-divider"></div>
+  <div class="cover-meta">
+    <div class="meta-item">
+      <span class="meta-label">Version</span>
+      <span class="meta-value">2.0</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Category</span>
+      <span class="meta-value">AI / Computer Vision</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Date</span>
+      <span class="meta-value">March 2026</span>
+    </div>
+  </div>
+  <div class="cover-footer">Confidential — Police &amp; Security Intelligence Use</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  PAGE 1: OVERVIEW                                              -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-icon">📋</div>
+    <div>
+      <span class="section-num">Section 01</span>
+      <h2>Project Overview</h2>
+    </div>
+  </div>
+
+  <p><strong>Sentinel AI</strong> is a real-time behavioral risk analysis and surveillance system designed for law enforcement, security operatives, and CCTV monitoring centers. It continuously analyzes live webcam feeds using a hybrid AI pipeline — combining computer vision, optical flow analysis, and a custom-trained violence classifier — to detect threats and alert authorities with zero manual intervention.</p>
+
+  <div class="highlight">
+    <p><strong>Mission:</strong> Transform any standard CCTV camera into an intelligent threat-detection unit that automatically identifies violent behavior, records incident evidence, GPS-tags the location, and notifies police — all within seconds of detection.</p>
+  </div>
+
+  <h3>System Architecture Overview</h3>
+  <div class="flow">
+    <div class="flow-step">
+      <span class="flow-step-icon">📷</span>
+      <span class="flow-step-label">Webcam</span>
+      <span class="flow-step-sub">Live HD Feed</span>
+    </div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">
+      <span class="flow-step-icon">⚛️</span>
+      <span class="flow-step-label">Frontend</span>
+      <span class="flow-step-sub">React + Vite</span>
+    </div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">
+      <span class="flow-step-icon">🗄️</span>
+      <span class="flow-step-label">Backend</span>
+      <span class="flow-step-sub">Node.js API</span>
+    </div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">
+      <span class="flow-step-icon">🧠</span>
+      <span class="flow-step-label">ML Service</span>
+      <span class="flow-step-sub">Python + YOLO</span>
+    </div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">
+      <span class="flow-step-icon">🚨</span>
+      <span class="flow-step-label">Alert</span>
+      <span class="flow-step-sub">Police Notified</span>
+    </div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><span class="metric-val">10-15+</span><span class="metric-lbl">FPS Processing</span></div>
+    <div class="metric"><span class="metric-val">1-2s</span><span class="metric-lbl">Detection Time</span></div>
+    <div class="metric"><span class="metric-val">95%</span><span class="metric-lbl">Detection Accuracy</span></div>
+    <div class="metric"><span class="metric-val">5s</span><span class="metric-lbl">Incident Clip</span></div>
+  </div>
+
+  <h3>Technology Stack</h3>
+  <div class="card-grid">
+    <div class="card">
+      <span class="card-icon">🧠</span>
+      <h4>ML Service</h4>
+      <p>Python · Flask · YOLOv8 · OpenCV · Optical Flow · TensorFlow</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🗄️</span>
+      <h4>Backend</h4>
+      <p>Node.js · Express · MongoDB Atlas · JWT · Socket.io · Multer</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">⚛️</span>
+      <h4>Frontend</h4>
+      <p>React 18 · Vite · Axios · React Router · WebRTC · MediaRecorder</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  PAGE 2: ML DETECTION ENGINE                                   -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-icon">🧠</div>
+    <div>
+      <span class="section-num">Section 02</span>
+      <h2>AI Detection Engine</h2>
+    </div>
+  </div>
+
+  <p>The ML service is the core intelligence layer of Sentinel AI. It runs as a standalone Python/Flask microservice, processing live video frames through a multi-stage hybrid pipeline to detect violent behavior with high accuracy and minimal false positives.</p>
+
+  <h3>Hybrid Detection Pipeline</h3>
+  <div class="arch-block">
+    <div class="arch-header">⚙️ Frame Processing Pipeline (per frame)</div>
+    <div class="arch-body">
+      <div class="flow" style="background:white; border:none; padding:0;">
+        <div class="flow-step"><span class="flow-step-icon">📸</span><span class="flow-step-label">Frame Input</span><span class="flow-step-sub">JPEG Base64</span></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step"><span class="flow-step-icon">🌊</span><span class="flow-step-label">Optical Flow</span><span class="flow-step-sub">Farneback</span></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step"><span class="flow-step-icon">👁️</span><span class="flow-step-label">YOLOv8n</span><span class="flow-step-sub">Person Detect</span></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step"><span class="flow-step-icon">🥊</span><span class="flow-step-label">Classifier</span><span class="flow-step-sub">Fight/Normal</span></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step"><span class="flow-step-icon">📊</span><span class="flow-step-label">TVS Score</span><span class="flow-step-sub">Risk Level</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="card-icon">🌊</span>
+      <h4>Optical Flow (Farneback)</h4>
+      <p>Measures inter-frame pixel movement magnitude. Detects rapid bursts of motion that characterize violent events. Filters out camera shake (threshold: 10.0).</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">👁️</span>
+      <h4>YOLOv8n Person Detector</h4>
+      <p>Detects people in frame with bounding boxes. Analyzes bounding-box displacement (speed), posture (aspect-ratio change), and inter-person proximity.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🥊</span>
+      <h4>Fight Classifier</h4>
+      <p>Custom YOLOv8n-cls model trained on SCVD dataset. Classifies fight vs. normal video content. Triggers with 82%+ confidence + minimal motion.</p>
+    </div>
+  </div>
+
+  <h3>Custom Fight Classifier — Training Details</h3>
+  <table>
+    <tr><th>Parameter</th><th>Value</th></tr>
+    <tr><td>Base Model</td><td>YOLOv8n-cls (nano classification)</td></tr>
+    <tr><td>Training Dataset</td><td>SCVD (Surveillance Camera Violence Dataset)</td></tr>
+    <tr><td>Frames per Video</td><td>50 frames extracted per video clip</td></tr>
+    <tr><td>Image Size</td><td>224 × 224 pixels</td></tr>
+    <tr><td>Epochs</td><td>16 (early stopping enabled)</td></tr>
+    <tr><td>Top-1 Validation Accuracy</td><td>~99.7%</td></tr>
+    <tr><td>Classes</td><td>fight · normal</td></tr>
+  </table>
+
+  <h3>Temporal Violence Score (TVS)</h3>
+  <p>A running score that accumulates evidence of violence across multiple frames, preventing single-frame false positives. The system requires <strong>sustained evidence over 3+ consecutive frames</strong> before any alert is raised.</p>
+
+  <table>
+    <tr><th>Event</th><th>TVS Change</th><th>Purpose</th></tr>
+    <tr><td>Classifier-confirmed fight (+motion)</td><td>+0.75 per frame</td><td>Fast build for phone/screen fight detection</td></tr>
+    <tr><td>Strong physical violence signals</td><td>+0.65 per frame</td><td>Multiple geometry signals present</td></tr>
+    <tr><td>Standard violence conditions</td><td>+0.45 per frame</td><td>Motion-based accumulation</td></tr>
+    <tr><td>Normal activity</td><td>−0.40 per frame</td><td>Gradual decay to Low</td></tr>
+    <tr><td>Static / calm scene</td><td>−0.60 per frame</td><td>Faster reset on clear scene</td></tr>
+  </table>
+
+  <h3>Risk Level Thresholds</h3>
+  <table>
+    <tr><th>Risk Level</th><th>TVS Required</th><th>Window Condition</th></tr>
+    <tr><td><strong style="color:#ef4444">🔴 High</strong></td><td>TVS ≥ 0.80 (fast) or 3+ violent frames in 12</td><td>22% of frames violent</td></tr>
+    <tr><td><strong style="color:#f59e0b">🟡 Medium</strong></td><td>TVS ≥ 0.60 (fast) or 2+ violent frames in 12</td><td>12% of frames violent</td></tr>
+    <tr><td><strong style="color:#10b981">🟢 Low</strong></td><td>TVS &lt; 0.08</td><td>No qualifying signals</td></tr>
+  </table>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  PAGE 3: VIOLENCE DECISION LOGIC                               -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-icon">⚖️</div>
+    <div>
+      <span class="section-num">Section 03</span>
+      <h2>Violence Decision Logic</h2>
+    </div>
+  </div>
+
+  <p>The decision engine evaluates multiple independent signals simultaneously. No single signal alone is sufficient — the system uses <strong>multi-signal corroboration</strong> to ensure high precision and avoid false alerts in police-grade deployments.</p>
+
+  <h3>Signal Types</h3>
+  <div class="card-grid">
+    <div class="card">
+      <span class="card-icon">💨</span>
+      <h4>Optical Flow Signals</h4>
+      <ul style="margin:0; padding-left:16px;">
+        <li><strong>FLOW_MICRO (0.3)</strong> — Any motion at all</li>
+        <li><strong>FLOW_WATCH (2.5)</strong> — Trackable motion</li>
+        <li><strong>FLOW_SIG (4.5)</strong> — Real physical activity</li>
+        <li><strong>FLOW_HIGH (7.0)</strong> — Fight-level motion</li>
+        <li><strong>FLOW_INSTANT (10.0)</strong> — Explosive burst</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="card-icon">📐</span>
+      <h4>Geometry Signals</h4>
+      <ul style="margin:0; padding-left:16px;">
+        <li><strong>Proximity</strong> — Persons overlapping (ratio 0.9)</li>
+        <li><strong>High Energy</strong> — Displacement ≥ 45px</li>
+        <li><strong>Moderate Energy</strong> — Displacement ≥ 25px</li>
+        <li><strong>Posture Change</strong> — Aspect ratio Δ ≥ 0.50</li>
+        <li><strong>Avg Flow</strong> — Sustained ≥ 5.0 over window</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="card-icon">🤖</span>
+      <h4>Classifier Signal</h4>
+      <ul style="margin:0; padding-left:16px;">
+        <li><strong>FIGHT_HIGH (0.82)</strong> — Strong signal, needs FLOW_MICRO</li>
+        <li><strong>FIGHT_MEDIUM (0.70)</strong> — Boost, needs FLOW_WATCH</li>
+        <li>Used for detecting fight video on phone screen</li>
+        <li>Never triggers without at least minimal motion</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Per-Scenario Decision Rules</h3>
+
+  <div class="arch-block">
+    <div class="arch-header">👤 1 Person in Frame</div>
+    <div class="arch-body">
+      <ul>
+        <li><strong>Violent:</strong> avg_flow ≥ 5.0 AND flow_score ≥ 7.0 → "Extreme sustained movement"</li>
+        <li><strong>Violent:</strong> flow_score ≥ 7.0 AND aggressive posture → "High-energy aggressive posture"</li>
+        <li><strong>Violent:</strong> flow_score ≥ 4.5 AND classifier ≥ 0.70 + motion → "Fight content + motion"</li>
+        <li><strong>Violent:</strong> classifier ≥ 0.82 AND FLOW_MICRO → "Fight detected on screen" (for phone/screen)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="arch-block">
+    <div class="arch-header">👥 2+ Persons in Frame</div>
+    <div class="arch-body">
+      <ul>
+        <li><strong>Requirement:</strong> flow_score ≥ 4.5 (FLOW_SIG) is mandatory base evidence</li>
+        <li><strong>Violent:</strong> base_flow + 2 of (proximity, high/moderate energy, posture, classifier+motion)</li>
+        <li><strong>Violent:</strong> base_flow + 1 signal + flow_score ≥ 7.0 → "High-energy multi-person incident"</li>
+        <li><strong>Violent:</strong> classifier ≥ 0.82 + FLOW_MICRO → "Fight content detected on screen"</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight-warning">
+    <p><strong>Police-Grade Accuracy:</strong> For 2+ persons, the system requires a minimum of 3 independent signal sources. Two people sitting, standing together, or walking side-by-side will never trigger an alert — only genuine physical confrontation with high optical flow, proximity violation, AND energy signals together will elevate the risk level.</p>
+  </div>
+
+  <h3>What Does NOT Trigger an Alert</h3>
+  <table>
+    <tr><th>Scenario</th><th>Why It's Safe</th></tr>
+    <tr><td>Two people sitting/talking</td><td>No base flow (FLOW_SIG 4.5 not reached)</td></tr>
+    <tr><td>Normal walking</td><td>Displacement below DISP_HIGH (45px threshold)</td></tr>
+    <tr><td>Camera bump or shake</td><td>FLOW_INSTANT_HIGH raised to 10.0</td></tr>
+    <tr><td>Hand gestures / waving</td><td>avg_flow stays below AVG_FLOW_HIGH (5.0)</td></tr>
+    <tr><td>Fight video on static phone screen</td><td>Any minimal motion (FLOW_MICRO 0.3) required alongside classifier</td></tr>
+    <tr><td>Classifier says fight, person is still</td><td>FLOW_MICRO guard always required for classifier path</td></tr>
+  </table>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  PAGE 4: BACKEND & API                                         -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-icon">🗄️</div>
+    <div>
+      <span class="section-num">Section 04</span>
+      <h2>Backend &amp; API Layer</h2>
+    </div>
+  </div>
+
+  <p>The backend is a <strong>Node.js/Express</strong> REST API server that handles authentication, alert management, video storage, and serves as the bridge between the frontend and ML service. Data is persisted in <strong>MongoDB Atlas</strong> (cloud) with in-memory fallback for continuity.</p>
+
+  <h3>Security Middleware Stack</h3>
+  <div class="card-grid">
+    <div class="card">
+      <span class="card-icon">🔐</span>
+      <h4>Helmet.js</h4>
+      <p>Sets security HTTP headers — Content Security Policy, XSS protection, frame guard.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🌐</span>
+      <h4>CORS</h4>
+      <p>Strict origin whitelist including both HTTP and HTTPS localhost origins for Vite dev server.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🛡️</span>
+      <h4>Rate Limiting</h4>
+      <p>Login: 20 req/15min. API: 100 req/15min. Webcam proxy: unlimited (20fps stream).</p>
+    </div>
+  </div>
+
+  <h3>API Endpoint Reference</h3>
+  <table>
+    <tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
+    <tr><td><span class="pill pill-green">POST</span></td><td>/api/auth/login</td><td>Authenticate user, returns JWT token</td></tr>
+    <tr><td><span class="pill pill-green">POST</span></td><td>/api/auth/register</td><td>Register new user account</td></tr>
+    <tr><td><span class="pill pill-blue">GET</span></td><td>/api/alerts</td><td>Fetch all incident alerts (role-filtered)</td></tr>
+    <tr><td><span class="pill pill-blue">GET</span></td><td>/api/alerts/:id</td><td>Get single alert with full details</td></tr>
+    <tr><td><span class="pill pill-orange">PUT</span></td><td>/api/alerts/:id</td><td>Update alert status (Investigating/Resolved/etc)</td></tr>
+    <tr><td><span class="pill pill-red">DELETE</span></td><td>/api/alerts/:id</td><td>Permanently delete alert record</td></tr>
+    <tr><td><span class="pill pill-green">POST</span></td><td>/api/report-incident</td><td>Submit incident with video clip upload (Multer)</td></tr>
+    <tr><td><span class="pill pill-green">POST</span></td><td>/api/webcam-proxy</td><td>Proxy base64 frame to ML service (20fps bypass)</td></tr>
+    <tr><td><span class="pill pill-green">POST</span></td><td>/api/analyze-video</td><td>Submit video file for full CNN analysis</td></tr>
+    <tr><td><span class="pill pill-blue">GET</span></td><td>/api/profile</td><td>Get user profile data</td></tr>
+    <tr><td><span class="pill pill-blue">GET</span></td><td>/health</td><td>Backend health check + MongoDB status</td></tr>
+  </table>
+
+  <h3>Database Schema</h3>
+  <div class="card-grid card-grid-2">
+    <div class="card">
+      <span class="card-icon">👤</span>
+      <h4>User Model</h4>
+      <ul style="margin:0;padding-left:16px;">
+        <li>username, password (bcrypt hashed)</li>
+        <li>role: admin | police | cctv_user</li>
+        <li>profile: name, email, phone, organization</li>
+        <li>Fallback to in-memory if MongoDB offline</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="card-icon">🚨</span>
+      <h4>Alert Model</h4>
+      <ul style="margin:0;padding-left:16px;">
+        <li>behavior, riskLevel, confidence, timestamp</li>
+        <li>videoPath (uploaded incident clip)</li>
+        <li>location: { lat, lon } — GPS coordinates</li>
+        <li>status: Pending | Investigating | Resolved</li>
+        <li>notes: [ { text, author, timestamp } ]</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight-success">
+    <p><strong>MongoDB Atlas Fallback:</strong> If the cloud database is unavailable, the backend automatically switches to in-memory storage with pre-seeded default users (admin, STOREcam, NYPD) so the system never goes completely offline.</p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  PAGE 5: FRONTEND FEATURES                                     -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-icon">⚛️</div>
+    <div>
+      <span class="section-num">Section 05</span>
+      <h2>Frontend &amp; User Interface</h2>
+    </div>
+  </div>
+
+  <p>Built with <strong>React 18 + Vite</strong> and served over <strong>HTTPS</strong> (self-signed SSL via @vitejs/plugin-basic-ssl), the frontend provides a real-time surveillance dashboard. All API calls are routed through the Vite development proxy to avoid mixed-content blocking.</p>
+
+  <h3>Key Pages &amp; Features</h3>
+  <div class="card-grid card-grid-2">
+    <div class="card">
+      <span class="card-icon">🔴</span>
+      <h4>Live Monitor (Webcam Feed)</h4>
+      <ul style="margin:4px 0 0; padding-left:16px;">
+        <li>Real-time webcam via WebRTC (getUserMedia)</li>
+        <li>Frame captured every 50ms (20fps) → Base64 JPEG</li>
+        <li>Sent to backend proxy → ML Service</li>
+        <li>Bounding boxes drawn on canvas overlay</li>
+        <li>Box color: 🔵 Normal / 🟡 Medium / 🔴 High</li>
+        <li>Risk badge + Analysis text displayed live</li>
+        <li>Violence Index, Subjects, Class, Confidence shown</li>
+        <li>Exponential backoff if ML service goes offline</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="card-icon">📊</span>
+      <h4>Dashboard</h4>
+      <ul style="margin:4px 0 0; padding-left:16px;">
+        <li>Summary stats: Total Alerts, High Risk, Pending, Resolved</li>
+        <li>Full alert history table with search &amp; filters</li>
+        <li>Filter by: Risk Level, Status, Date Range</li>
+        <li>Pagination (25 / 50 / 100 items per page)</li>
+        <li>Embedded 5-second incident video clip player</li>
+        <li>GPS coordinates with Google Maps link</li>
+        <li>Reverse geocoding → human-readable address</li>
+        <li>Alert actions: Verify / Report / Investigate / Resolve / Delete</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="card-icon">🎬</span>
+      <h4>Incident Recording</h4>
+      <ul style="margin:4px 0 0; padding-left:16px;">
+        <li>MediaRecorder API records webcam at HIGH risk onset</li>
+        <li>Records for exactly 5 seconds (WebM format)</li>
+        <li>Uploaded automatically to /api/report-incident</li>
+        <li>30-second cooldown between clips (anti-spam)</li>
+        <li>Manual Report button for operator-triggered reports</li>
+        <li>Clip stored on server, path saved in alert record</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="card-icon">🎤</span>
+      <h4>Voice Alerts (Speech Synthesis)</h4>
+      <ul style="margin:4px 0 0; padding-left:16px;">
+        <li>Spoken alerts via Web Speech API (SpeechSynthesis)</li>
+        <li>"Fighting detected — alert authorities"</li>
+        <li>"Assault detected — immediate response required"</li>
+        <li>Risk level change announcements</li>
+        <li>Recording start/stop confirmations</li>
+        <li>System online/offline status announcements</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="card-icon">📍</span>
+      <h4>GPS Location Tracking</h4>
+      <ul style="margin:4px 0 0; padding-left:16px;">
+        <li>Browser Geolocation API (lat/lon)</li>
+        <li>Attached to every incident report automatically</li>
+        <li>Reverse geocoded to street address (Nominatim)</li>
+        <li>Google Maps deep link for each incident</li>
+        <li>1 req/sec rate limiting for Nominatim API</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="card-icon">📤</span>
+      <h4>Video Upload Analysis</h4>
+      <ul style="margin:4px 0 0; padding-left:16px;">
+        <li>Upload MP4/WebM/AVI video for offline analysis</li>
+        <li>Analyzed by ML service CNN + YOLO pipeline</li>
+        <li>Returns per-frame violence scores</li>
+        <li>Results stored as alert records</li>
+        <li>Max file size: 100MB</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  PAGE 6: USER ROLES                                            -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-icon">👥</div>
+    <div>
+      <span class="section-num">Section 06</span>
+      <h2>User Roles &amp; Access Control</h2>
+    </div>
+  </div>
+
+  <p>The system implements <strong>Role-Based Access Control (RBAC)</strong> with three distinct user roles, each with tailored permissions reflecting real-world security operations hierarchy.</p>
+
+  <div class="role-cards">
+    <div class="role-card role-admin">
+      <h4>👑 Administrator</h4>
+      <ul>
+        <li>Full system access</li>
+        <li>View all alerts</li>
+        <li>Update any alert status</li>
+        <li>Delete alerts permanently</li>
+        <li>Clear alert history</li>
+        <li>Manage user accounts</li>
+        <li>Configure system settings</li>
+        <li>Access audit logs</li>
+      </ul>
+    </div>
+    <div class="role-card role-police">
+      <h4>👮 Police Officer</h4>
+      <ul>
+        <li>Read-only audit view</li>
+        <li>View all incident alerts</li>
+        <li>View incident video clips</li>
+        <li>Mark alerts as Investigating</li>
+        <li>Mark alerts as Resolved</li>
+        <li>Delete alerts permanently</li>
+        <li>Add investigation notes</li>
+        <li>Cannot clear history</li>
+      </ul>
+    </div>
+    <div class="role-card role-cctv">
+      <h4>📹 CCTV Operator</h4>
+      <ul>
+        <li>Live monitor access</li>
+        <li>View own alerts</li>
+        <li>Mark alerts as Verified</li>
+        <li>Mark alerts as Reported</li>
+        <li>Mark as False Alarm</li>
+        <li>Submit manual reports</li>
+        <li>Clear own history</li>
+        <li>Upload videos for analysis</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Authentication System</h3>
+  <table>
+    <tr><th>Feature</th><th>Implementation</th></tr>
+    <tr><td>Password Security</td><td>bcrypt hashing (salt rounds: 10)</td></tr>
+    <tr><td>Session Token</td><td>JWT (JSON Web Token) — 24-hour expiry</td></tr>
+    <tr><td>Token Storage</td><td>Frontend state (React context)</td></tr>
+    <tr><td>Brute Force Protection</td><td>Rate limiter: 20 login attempts / 15 minutes per IP</td></tr>
+    <tr><td>Default Test Accounts</td><td>admin / admin123 · STOREcam / storecam@123 · NYPD / nypd@123</td></tr>
+  </table>
+
+  <h3>Alert Status Workflow</h3>
+  <div class="flow">
+    <div class="flow-step"><span class="flow-step-icon">🔔</span><span class="flow-step-label">Pending</span><span class="flow-step-sub">Auto-created</span></div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="flow-step-icon">✅</span><span class="flow-step-label">Verified</span><span class="flow-step-sub">CCTV Operator</span></div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="flow-step-icon">📋</span><span class="flow-step-label">Reported</span><span class="flow-step-sub">CCTV Operator</span></div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="flow-step-icon">🔍</span><span class="flow-step-label">Investigating</span><span class="flow-step-sub">Police / Admin</span></div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="flow-step-icon">✔️</span><span class="flow-step-label">Resolved</span><span class="flow-step-sub">Police / Admin</span></div>
+  </div>
+
+  <h3>Security Architecture Notes</h3>
+  <ul>
+    <li><strong>HTTPS Only:</strong> Frontend served exclusively over HTTPS (Vite basicSsl) — required by browser APIs (getUserMedia, Geolocation)</li>
+    <li><strong>Proxy Architecture:</strong> All backend calls go through Vite dev proxy — avoids mixed-content blocking (HTTPS page → HTTP backend)</li>
+    <li><strong>No Direct HTTP Calls:</strong> Frontend uses relative paths (/api/..., /uploads/...) — never hardcoded HTTP URLs</li>
+    <li><strong>File Validation:</strong> multer enforces MIME type + extension whitelist for uploads (MP4, WebM, AVI, MKV, JPG, PNG)</li>
+  </ul>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  PAGE 7: DEPLOYMENT                                            -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-icon">🚀</div>
+    <div>
+      <span class="section-num">Section 07</span>
+      <h2>Deployment &amp; Configuration</h2>
+    </div>
+  </div>
+
+  <h3>Service Architecture</h3>
+  <div class="card-grid">
+    <div class="card">
+      <span class="card-icon">🧠</span>
+      <h4>ML Service — Port 5000</h4>
+      <p>Python Flask. Starts with: <code>python -m ml_service.app</code>. Loads YOLOv8n + fight classifier on startup (~18s warm-up). Writes logs to ml_service.log.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🗄️</span>
+      <h4>Backend — Port 4005</h4>
+      <p>Node.js Express. Starts with: <code>node server.js</code>. Connects to MongoDB Atlas on startup. Creates uploads/ directory automatically.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">⚛️</span>
+      <h4>Frontend — Port 5173</h4>
+      <p>Vite dev server. Starts with: <code>npm run dev</code>. Serves on HTTPS with self-signed cert. Proxy routes /api and /uploads to backend.</p>
+    </div>
+  </div>
+
+  <h3>Quick Start</h3>
+  <div class="code">
+    <span class="cm"># 1. Start ML Service</span><br>
+    cd behavior-risk-analysis<br>
+    python -m ml_service.app<br><br>
+    <span class="cm"># 2. Start Backend</span><br>
+    cd backend &amp;&amp; node server.js<br><br>
+    <span class="cm"># 3. Start Frontend</span><br>
+    cd frontend &amp;&amp; npm run dev<br><br>
+    <span class="cm"># Or use the batch script:</span><br>
+    start_all.bat
+  </div>
+
+  <h3>Environment Configuration</h3>
+  <div class="card-grid card-grid-2">
+    <div class="card">
+      <h4>📁 backend/.env</h4>
+      <div class="code" style="font-size:10px; margin-top:8px;">
+        PORT=4005<br>
+        MONGODB_URI=mongodb+srv://...<br>
+        JWT_SECRET=super_secret_key<br>
+        ML_SERVICE_URL=http://localhost:5000
+      </div>
+    </div>
+    <div class="card">
+      <h4>📁 frontend/.env</h4>
+      <div class="code" style="font-size:10px; margin-top:8px;">
+        VITE_API_URL=<br>
+        <span class="cm"># Empty = use Vite proxy</span><br>
+        <span class="cm"># Avoids mixed-content block</span>
+      </div>
+    </div>
+  </div>
+
+  <h3>Model Files Required</h3>
+  <table>
+    <tr><th>File</th><th>Location</th><th>Purpose</th></tr>
+    <tr><td>yolov8n.pt</td><td>ml_service/</td><td>YOLOv8 nano person detector (auto-download)</td></tr>
+    <tr><td>fight_classifier.pt</td><td>ml_service/models/</td><td>Custom trained fight/normal classifier</td></tr>
+    <tr><td>cnn_model.h5</td><td>ml_service/model/</td><td>Legacy CNN (used only for video upload analysis)</td></tr>
+  </table>
+
+  <h3>Access the Application</h3>
+  <div class="highlight">
+    <p>Open <strong>https://localhost:5173</strong> in Chrome. Accept the self-signed certificate warning (click Advanced → Proceed to localhost). The landing page will load with navigation to Login, Dashboard, and Live Monitor.</p>
+  </div>
+
+  <h3>Changelog — Version 2.0 Key Improvements</h3>
+  <table>
+    <tr><th>Improvement</th><th>Detail</th></tr>
+    <tr><td>FPS: 1 → 10-15+</td><td>Disabled CNN on live path; YOLOv8 ONNX optimized inference</td></tr>
+    <tr><td>Detection time: 5-8s → 1-2s</td><td>Removed slow TensorFlow hot path for webcam frames</td></tr>
+    <tr><td>Custom fight classifier</td><td>YOLOv8n-cls trained on SCVD dataset — 99.7% validation accuracy</td></tr>
+    <tr><td>Multi-signal violence logic</td><td>Requires 3 independent signals for 2+ person alerts</td></tr>
+    <tr><td>TVS temporal scoring</td><td>3+ sustained frames required before risk elevation</td></tr>
+    <tr><td>Session management</td><td>Per-session state isolation prevents cross-stream contamination</td></tr>
+    <tr><td>30s alert cooldown</td><td>Anti-spam: one incident clip per 30 seconds maximum</td></tr>
+    <tr><td>HTTPS frontend</td><td>Required for camera access in non-localhost browser contexts</td></tr>
+  </table>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  PAGE 8: HOW TO USE + PRINT BUTTON                            -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="page" style="page-break-after: avoid;">
+  <div class="section-header">
+    <div class="section-icon">📖</div>
+    <div>
+      <span class="section-num">Section 08</span>
+      <h2>Usage Guide</h2>
+    </div>
+  </div>
+
+  <h3>Live Monitoring Workflow</h3>
+  <ol style="font-size:13px; line-height:2; color:#475569;">
+    <li>Open <strong>https://localhost:5173</strong> and log in with your credentials</li>
+    <li>Navigate to <strong>Live Monitor</strong> from the top navigation bar</li>
+    <li>Click <strong>"Connect Feed"</strong> — grant camera permission when prompted</li>
+    <li>The system begins analysis immediately — bounding boxes appear around detected persons</li>
+    <li>Monitor the <strong>Risk Badge</strong> (bottom-right): Low 🟢 / Medium 🟡 / High 🔴</li>
+    <li>On <strong>HIGH risk</strong>: voice alert sounds, 5-second clip records automatically, incident saved to dashboard</li>
+    <li>Use <strong>"Manual Report"</strong> button to manually flag a suspicious scene</li>
+    <li>Click <strong>"Terminate Feed"</strong> to stop monitoring</li>
+  </ol>
+
+  <h3>Reviewing Incidents (Dashboard)</h3>
+  <ol style="font-size:13px; line-height:2; color:#475569;">
+    <li>Open <strong>Dashboard</strong> — all incidents listed with risk level, behavior, timestamp</li>
+    <li>Click the <strong>location link</strong> (📍) to open Google Maps at the incident location</li>
+    <li>Play the <strong>5-second incident clip</strong> directly in the dashboard table</li>
+    <li>Update status: click <strong>Verify → Report → Investigate → Resolve</strong> as investigation progresses</li>
+    <li>Use <strong>search and filters</strong> to find specific incidents by behavior, risk level, or date</li>
+    <li>Police role: use <strong>Investigate</strong> and <strong>Resolve</strong> buttons to manage case workflow</li>
+  </ol>
+
+  <h3>Detection Signals Summary</h3>
+  <table>
+    <tr><th>What You See on Screen</th><th>What It Means</th></tr>
+    <tr><td>Blue bounding box — "PERSON 1"</td><td>Person detected, low risk, normal activity</td></tr>
+    <tr><td>Orange box — "⚡ ALERT"</td><td>Medium risk — suspicious activity building</td></tr>
+    <tr><td>Red pulsing box — "🚨 THREAT" + HIGH badge</td><td>High risk — violence detected, recording in progress</td></tr>
+    <tr><td>"FIGHT CONTENT DETECTED (82% CONF.)"</td><td>Classifier detected fight video on phone/screen + motion</td></tr>
+    <tr><td>"Violent confrontation — multiple persons"</td><td>3-signal multi-person violence: flow + proximity + energy</td></tr>
+    <tr><td>"Extreme sustained movement"</td><td>Single person: sustained high flow + current high flow</td></tr>
+    <tr><td>⚡ "ML RECONNECTING..."</td><td>ML service temporarily offline, retrying with backoff</td></tr>
+  </table>
+
+  <div style="margin-top:40px; text-align:center; padding:30px; background:#f8fafc; border-radius:12px; border:1px solid #e2e8f0;">
+    <div style="font-size:32px; margin-bottom:12px;">🛡️</div>
+    <div style="font-size:18px; font-weight:700; color:#0f172a; margin-bottom:6px;">Sentinel AI — Behavioral Risk Analysis</div>
+    <div style="font-size:12px; color:#64748b; margin-bottom:20px;">Version 2.0 · March 2026 · Confidential — Police &amp; Security Intelligence</div>
+    <button onclick="window.print()" style="background:linear-gradient(135deg,#6366f1,#4f46e5); color:white; border:none; padding:12px 28px; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; font-family:Inter,sans-serif;">
+      🖨️ Save as PDF / Print
+    </button>
+  </div>
+</div>
+
+</body>
+</html>

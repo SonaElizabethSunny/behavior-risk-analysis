@@ -1,0 +1,116 @@
+.export-button-container {
+    position: relative;
+    display: inline-block;
+}
+
+.export-btn {
+    padding: var(--space-3) var(--space-6);
+    background: linear-gradient(135deg, var(--secondary-500), var(--primary-500));
+    color: white;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    box-shadow: var(--shadow-md);
+}
+
+.export-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.export-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.export-menu {
+    position: absolute;
+    top: calc(100% + var(--space-2));
+    right: 0;
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2);
+    min-width: 220px;
+    box-shadow: var(--shadow-xl);
+    z-index: 1000;
+    animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.export-menu-item {
+    width: 100%;
+    padding: var(--space-3);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    text-align: left;
+}
+
+.export-menu-item:hover {
+    background: var(--bg-hover);
+}
+
+.export-icon {
+    font-size: var(--text-2xl);
+    flex-shrink: 0;
+}
+
+.export-menu-title {
+    font-weight: 600;
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+}
+
+.export-menu-desc {
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+    margin-top: 2px;
+}
+
+.spinner-small {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .export-menu {
+        right: auto;
+        left: 0;
+    }
+}

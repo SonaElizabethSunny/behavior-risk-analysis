@@ -1,0 +1,163 @@
+:root {
+  /* ── Brand palette (Palantir/Linear style) ── */
+  --bg-main: #020817; 
+  --bg-card: #0d1117;
+  
+  --accent-primary: #00d4ff; 
+  --accent-secondary: #6366f1;
+  
+  --color-danger: #ef4444;
+  --color-warning: #f59e0b;
+  --color-success: #10b981;
+
+  /* ── Glassmorphism ── */
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+
+  /* ── Spacing & Borders ── */
+  --radius-card: 12px;
+  --radius-btn: 8px;
+  --radius-pill: 100px;
+  
+  /* ── Text ── */
+  --text-bright: rgba(255, 255, 255, 0.95);
+  --text-muted:  rgba(255, 255, 255, 0.70);
+  --text-dim:    rgba(255, 255, 255, 0.40);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  transition: all 0.2s ease;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-bright);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+}
+
+/* Glass Panel Utility */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-card);
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.glass-panel:hover {
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
+  border-color: rgba(0, 212, 255, 0.2);
+}
+
+/* App Container */
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Form Elements Reset */
+input, select, textarea {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-bright);
+  border-radius: var(--radius-btn);
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+input:hover, select:hover, textarea:hover {
+  border-color: rgba(0, 212, 255, 0.3);
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.15);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--text-dim);
+}
+
+/* Badges */
+.badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge.risk-high, .status-high {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--color-danger);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.badge.risk-medium, .status-medium {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--color-warning);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.badge.risk-low, .status-low {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--color-success);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+/* Action Buttons */
+.action-btn {
+  background: var(--accent-secondary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-btn);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-btn:hover:not(:disabled) {
+  background: #4f46e5;
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+  transform: translateY(-1px);
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Animation utilities */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}

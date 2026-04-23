@@ -1,0 +1,530 @@
+/* ===================================
+   ABOUT PAGE — FULLY CONSISTENT WITH LANDING PAGE
+   Sentinel AI Security Platform
+   =================================== */
+
+/* ── Design tokens (mirrors LandingPage palette) ── */
+:root {
+    --blue-600: #2563eb;
+    --blue-500: #3b82f6;
+    --blue-400: #60a5fa;
+    --purple-500: #8b5cf6;
+    --dark-900: #0a1628;
+    --dark-800: #0f1f38;
+    --dark-700: #1a2942;
+    --glass-bg: rgba(255, 255, 255, 0.04);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-muted: rgba(255, 255, 255, 0.7);
+    --text-bright: rgba(255, 255, 255, 0.9);
+}
+
+.about-page {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* ===================================
+   HERO SECTION
+   =================================== */
+
+.about-hero {
+    padding: 9rem 2rem 7rem;
+    background: linear-gradient(135deg, var(--dark-900) 0%, var(--dark-700) 50%, var(--dark-800) 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.about-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 30% 50%, rgba(59, 130, 246, 0.13) 0%, transparent 55%),
+        radial-gradient(circle at 75% 40%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+    animation: heroGlow 8s ease-in-out infinite alternate;
+}
+
+@keyframes heroGlow {
+    0%   { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+/* Grid overlay — same as LandingPage */
+.about-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(59,130,246,0.06)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.about-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+    animation: fadeInUp 0.9s ease-out;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.about-hero-title {
+    font-size: 4.5rem;
+    font-weight: 900;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #fff 0%, var(--blue-400) 50%, var(--blue-500) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% auto;
+    animation: titleShine 3s ease-in-out infinite;
+}
+
+@keyframes titleShine {
+    0%, 100% { background-position: 0% center; }
+    50%       { background-position: 100% center; }
+}
+
+.about-hero-description {
+    font-size: 1.4rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* ===================================
+   MISSION SECTION
+   =================================== */
+
+.mission-section {
+    padding: 8rem 2rem;
+    background: var(--dark-800);
+    position: relative;
+}
+
+.mission-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% 60%, rgba(59, 130, 246, 0.05) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.mission-content {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.mission-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.mission-description {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+}
+
+.mission-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.mission-stat {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.mission-stat::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--blue-500), var(--purple-500));
+    transform: scaleX(0);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mission-stat:hover::before { transform: scaleX(1); }
+
+.mission-stat:hover {
+    background: rgba(59, 130, 246, 0.08);
+    border-color: rgba(59, 130, 246, 0.35);
+    transform: translateY(-6px);
+    box-shadow: 0 15px 50px rgba(59, 130, 246, 0.2);
+}
+
+.mission-stat-number {
+    font-size: 2.75rem;
+    font-weight: 900;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--blue-400) 0%, var(--blue-500) 50%, var(--purple-500) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+}
+
+.mission-stat-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+}
+
+/* ===================================
+   SHARED SECTION HEADER
+   =================================== */
+
+.section-header {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.section-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+.section-description {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* ===================================
+   VALUES SECTION
+   =================================== */
+
+.values-section {
+    padding: 8rem 2rem;
+    background: linear-gradient(180deg, var(--dark-800) 0%, var(--dark-700) 100%);
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.value-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 3rem 2.5rem;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.value-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--blue-500), var(--purple-500));
+    transform: scaleX(0);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.value-card:hover::before { transform: scaleX(1); }
+
+.value-card:hover {
+    transform: translateY(-12px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(59, 130, 246, 0.4);
+    box-shadow: 0 25px 70px rgba(59, 130, 246, 0.25);
+}
+
+.value-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.4));
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-block;
+}
+
+.value-card:hover .value-icon {
+    transform: scale(1.15) rotate(8deg);
+}
+
+.value-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.value-description {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+/* ===================================
+   TECHNOLOGY OVERVIEW SECTION
+   =================================== */
+
+.tech-overview-section {
+    padding: 8rem 2rem;
+    background: var(--dark-900);
+    position: relative;
+    overflow: hidden;
+}
+
+.tech-overview-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 80% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.tech-overview-content {
+    max-width: 1300px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.tech-overview-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: white;
+    text-align: center;
+    margin-bottom: 5rem;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.tech-features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+}
+
+.tech-feature-item {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 2.5rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.tech-feature-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--blue-500), var(--purple-500));
+    transform: scaleX(0);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tech-feature-item:hover::before { transform: scaleX(1); }
+
+.tech-feature-item:hover {
+    background: rgba(59, 130, 246, 0.08);
+    border-color: rgba(59, 130, 246, 0.4);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px rgba(59, 130, 246, 0.2);
+}
+
+.tech-feature-item h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--blue-400);
+    margin-bottom: 1rem;
+}
+
+.tech-feature-item p {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+/* ===================================
+   TEAM SECTION
+   =================================== */
+
+.team-section {
+    padding: 8rem 2rem;
+    background: var(--dark-800);
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2.5rem;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.team-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 3rem 2.5rem;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.team-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--blue-500), var(--purple-500));
+    transform: scaleX(0);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.team-card:hover::before { transform: scaleX(1); }
+
+.team-card:hover {
+    transform: translateY(-12px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(59, 130, 246, 0.4);
+    box-shadow: 0 25px 70px rgba(59, 130, 246, 0.25);
+}
+
+.team-avatar {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 1.75rem;
+    background: linear-gradient(135deg, var(--blue-500) 0%, var(--purple-500) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+    box-shadow: 0 10px 40px rgba(59, 130, 246, 0.35);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.team-card:hover .team-avatar {
+    transform: scale(1.1);
+    box-shadow: 0 15px 50px rgba(59, 130, 246, 0.5);
+}
+
+.team-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.team-role {
+    font-size: 1rem;
+    color: var(--blue-400);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.team-description {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+/* ===================================
+   RESPONSIVE DESIGN
+   =================================== */
+
+@media (max-width: 1200px) {
+    .about-hero-title { font-size: 3.5rem; }
+    .section-title    { font-size: 2.75rem; }
+    .tech-overview-title { font-size: 2.75rem; }
+}
+
+@media (max-width: 1024px) {
+    .mission-content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    .about-hero-title { font-size: 3rem; }
+}
+
+@media (max-width: 768px) {
+    .about-hero { padding: 7rem 1.5rem 5rem; }
+
+    .about-hero-title { font-size: 2.25rem; }
+
+    .about-hero-description { font-size: 1.15rem; }
+
+    .section-title,
+    .tech-overview-title { font-size: 2rem; }
+
+    .section-description { font-size: 1.1rem; }
+
+    .values-grid,
+    .tech-features-grid,
+    .team-grid { grid-template-columns: 1fr; }
+
+    .mission-title { font-size: 2rem; }
+}
+
+@media (max-width: 480px) {
+    .about-hero-title { font-size: 1.9rem; }
+
+    .value-card,
+    .tech-feature-item,
+    .team-card { padding: 2rem 1.5rem; }
+}
